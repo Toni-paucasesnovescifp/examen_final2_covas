@@ -108,7 +108,7 @@ class _ProductScreenBody extends StatelessWidget {
                           ),
                         ),
                         Text(
-                          "Restaurant: ${productService.selectedProduct.restaurant}",
+                          "Primer llinatge: ${productService.selectedProduct.cognom1}",
                           style: TextStyle(
                             fontSize: 20,
                             color: Colors.white,
@@ -116,52 +116,11 @@ class _ProductScreenBody extends StatelessWidget {
                           ),
                         ),
                         Text(
-                          "Tipo: ${productService.selectedProduct.tipus}",
+                          "Segon llinatge: ${productService.selectedProduct.cognom2}",
                           style: TextStyle(fontSize: 18, color: Colors.white),
                         ),
-                        Text(
-                          "Disponible: ${productService.selectedProduct.disponible ? 'Sí' : 'No'}",
-                          style: TextStyle(fontSize: 18, color: Colors.white),
-                        ),
-                        if (productService.selectedProduct.disponible)
-                          _Availability(),
-
-                        Container(
-                          padding: EdgeInsets.symmetric(
-                            horizontal: 12,
-                            vertical: 8,
-                          ),
-                          decoration: BoxDecoration(
-                            color: Colors.black.withOpacity(
-                              0.6,
-                            ), // Fondo semitransparente para mejorar visibilidad
-                            borderRadius: BorderRadius.circular(
-                              10,
-                            ), // Bordes redondeados
-                          ),
-                          child: Row(
-                            mainAxisSize:
-                                MainAxisSize
-                                    .min, // Ajusta el tamaño al contenido
-                            children: [
-                              Text(
-                                "Disponible: ",
-                                style: TextStyle(
-                                  fontSize: 18,
-                                  color: Colors.white,
-                                  fontWeight: FontWeight.bold,
-                                ),
-                              ),
-                              Switch(
-                                value:
-                                    productService.selectedProduct.disponible,
-                                onChanged:
-                                    null, // Deshabilitado para que no sea editable
-                                activeColor: Colors.indigo,
-                              ),
-                            ],
-                          ),
-                        ),
+                        
+                        
                       ],
                     ),
                   ),
@@ -192,27 +151,6 @@ class _ProductScreenBody extends StatelessWidget {
 
 
 
-Positioned(
-                  top: 400,
-                  right: 20,
-                  child: IconButton(
-                    onPressed: ()  { final geo=productService.selectedProduct.geo;
-                    
-                    //abrirGoogleMaps(geo);
-                    Navigator.pushNamed(
-  context,
-  'mapa',
-  arguments: geo, // Pasas la cadena aquí
-);
-                      
-                    },
-                    icon: Icon(
-                      Icons.map,
-                      size: 30,
-                      color: Colors.white,
-                    ),
-                  ),
-                ),
 
 
 
@@ -311,15 +249,6 @@ class _ProductForm extends StatelessWidget {
                 ),
               ),
               SizedBox(height: 30),
-              SwitchListTile.adaptive(
-                // mostra si el producte està disponible
-                value: tempProduct.disponible,
-                title: Text('Disponible'),
-                activeColor: Colors.indigo,
-                onChanged:
-                    productForm
-                        .updateAvailability, // actualitza la disponibilitat del producte
-              ),
               SizedBox(height: 30),
             ],
           ),
@@ -345,52 +274,7 @@ class _ProductForm extends StatelessWidget {
   );
 }
 
-class _Availability extends StatelessWidget {
-  const _Availability({Key? key}) : super(key: key);
-
-  @override
-  Widget build(BuildContext context) {
-    return Container(
-      child: FittedBox(
-        fit: BoxFit.contain,
-        child: Padding(
-          padding: const EdgeInsets.symmetric(horizontal: 10),
-          child: Text(
-            'Reservat',
-            style: TextStyle(fontSize: 20, color: Colors.white),
-          ),
-        ),
-      ),
-      width: 100,
-      height: 70,
-      alignment: Alignment.center,
-      decoration: BoxDecoration(
-        color: Colors.red[300],
-        borderRadius: BorderRadius.only(
-          bottomRight: Radius.circular(25),
-          topLeft: Radius.circular(25),
-        ),
-      ),
-    );
-  }
-}
 
 
 
 
-void abrirGoogleMaps(String geo) async {
-  if (geo.isEmpty) {
-    print("Error: La geolocalización está vacía.");
-    return;
-  }
-
-  final String googleMapsUrl = "https://www.google.com/maps/search/?api=1&query=$geo";
-  
-  final Uri uri = Uri.parse(googleMapsUrl);
-
-  if (await canLaunchUrl(uri)) {
-    await launchUrl(uri);
-  } else {
-    print("No se pudo abrir Google Maps, la url es $googleMapsUrl");
-  }
-}

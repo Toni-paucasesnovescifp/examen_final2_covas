@@ -126,12 +126,13 @@ class HomeScreen extends StatelessWidget {
           // cream un producte amb valors predeterminats
           productsService.newPicture = null;
           productsService.selectedProduct = Product(
-            disponible: true,
+            
             nom: 'Producte nou',
             descripcio: '',
-            tipus: '',
-            restaurant: '',
-            geo: '',
+            cognom1: '',
+            cognom2: '',
+            id: 0,
+            
           );
           Navigator.of(context)
               .pushNamed('product'); // navega a la pantalla de producte

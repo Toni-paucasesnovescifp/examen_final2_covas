@@ -10,7 +10,7 @@ import 'package:http/http.dart' as http;
 
 class ProductsService extends ChangeNotifier {
   final String _baseUrl =
-      'ca1baaae4f1f9e02a394.free.beeceptor.com/api';
+      'ca1baaae4f1f9e02a394.free.beeceptor.com';
   final List<Product> products = [];
 
   late Product selectedProduct;
@@ -29,17 +29,17 @@ class ProductsService extends ChangeNotifier {
     isLoading = true;
     notifyListeners();
 
-    final url = Uri.https(_baseUrl, 'plats');
+    final url = Uri.https(_baseUrl, 'api/plats');
     final resp = await http.get(url);
 
     // Convertim la resposta en un mapa de productes
-    final Map<String, dynamic> productsMap = json.decode(resp.body);
+    final List<dynamic>    productsMap = json.decode(resp.body);
     print("Contenido de productsMap: $productsMap");
 
     // recorrem els productes i els afegim a la llista
-    productsMap.forEach((key, value) {
-      final tempProduct = Product.fromMap(value);
-      tempProduct.id = key;
+    productsMap.forEach(( value) {
+      final tempProduct = value;
+      tempProduct.id = value.id;
       products.add(tempProduct);
     });
 
@@ -73,7 +73,7 @@ class ProductsService extends ChangeNotifier {
         this.products.indexWhere((element) => element.id == product.id);
     this.products[index] = product;
 
-    return product.id!;
+    return product.id.toString();
   }
 
   // cream un porducte nou a Firebase
@@ -85,7 +85,7 @@ class ProductsService extends ChangeNotifier {
     product.id = decodedData['name'];
     this.products.add(product);
 
-    return product.id!;
+    return product.id.toString();
   }
 
   // actualitza la imatge seleccionada
