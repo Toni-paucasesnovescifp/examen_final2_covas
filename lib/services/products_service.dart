@@ -10,7 +10,7 @@ import 'package:http/http.dart' as http;
 
 class ProductsService extends ChangeNotifier {
   final String _baseUrl =
-      'examen-practic-sim-default-rtdb.europe-west1.firebasedatabase.app';
+      'ca1baaae4f1f9e02a394.free.beeceptor.com/api';
   final List<Product> products = [];
 
   late Product selectedProduct;
@@ -29,7 +29,7 @@ class ProductsService extends ChangeNotifier {
     isLoading = true;
     notifyListeners();
 
-    final url = Uri.https(_baseUrl, 'plats.json');
+    final url = Uri.https(_baseUrl, 'plats');
     final resp = await http.get(url);
 
     // Convertim la resposta en un mapa de productes
