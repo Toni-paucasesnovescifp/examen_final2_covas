@@ -37,31 +37,18 @@ class LoginFormProvider extends ChangeNotifier {
 
     isLoading = true;
 
-    try {
-      final UserCredential userCredential =
-          await FirebaseAuth.instance.signInWithEmailAndPassword(
-        email: email,
-        password: password,
-      );
-      print('Usuario autenticado: ${userCredential.user?.email}');
+   
+      
+      print('Usuario autenticado: ${email}');
 
           Preferences.email=email;
           Preferences.password=password;
 
 
       Navigator.pushReplacementNamed(context, 'home'); // Navega al home
-    } on FirebaseAuthException catch (e) {
-      print('Error en la autenticación: ${e.message}');
-      // Mostra un SnackBar per informar d'usuari incorrecte
-      ScaffoldMessenger.of(context).showSnackBar(
-        SnackBar(
-          content: Text('Usuario incorrecto'),
-          backgroundColor: Colors.red, // Color del fons del SnackBar
-        ),
-      );
-    } finally {
+
       isLoading = false;
-    }
+   
   }
   // mètode per registrar un nou usuari a Firebase Autentication
   Future<void> registerWithFirebase(BuildContext context) async {
