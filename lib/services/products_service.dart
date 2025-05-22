@@ -33,14 +33,14 @@ class ProductsService extends ChangeNotifier {
     final resp = await http.get(url);
 
     // Convertim la resposta en un mapa de productes
-    final List<dynamic>    productsMap = json.decode(resp.body);
+    final    productsMap = json.decode(resp.body);
     print("Contenido de productsMap: $productsMap");
 
     // recorrem els productes i els afegim a la llista
     productsMap.forEach(( value) {
       final tempProduct = value;
-      tempProduct.id = value.id;
-      products.add(tempProduct);
+      
+      products.add(Product.fromMap(tempProduct));
     });
 
     isLoading = false;
